@@ -10,13 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var forms_1 = require("@angular/forms");
 var ReactiveFormComponent = (function () {
     function ReactiveFormComponent() {
     }
     ReactiveFormComponent.prototype.ngOnInit = function () {
+        this.form = new forms_1.FormGroup({
+            name: new forms_1.FormControl(''),
+            username: new forms_1.FormControl('')
+        });
+        console.log(this.form);
     };
     ReactiveFormComponent.prototype.processForm = function () {
-        console.log('processing');
+        console.log('processing', this.form.value);
     };
     return ReactiveFormComponent;
 }());
