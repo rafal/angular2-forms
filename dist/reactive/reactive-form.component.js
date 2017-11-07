@@ -12,12 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var ReactiveFormComponent = (function () {
-    function ReactiveFormComponent() {
+    function ReactiveFormComponent(fb) {
+        this.fb = fb;
     }
     ReactiveFormComponent.prototype.ngOnInit = function () {
-        this.form = new forms_1.FormGroup({
-            name: new forms_1.FormControl(''),
-            username: new forms_1.FormControl('')
+        // this.form = new FormGroup({
+        //   name: new FormControl(''),
+        //   username: new FormControl('')
+        // });
+        this.form = this.fb.group({
+            name: [''],
+            username: ['']
         });
         console.log(this.form);
     };
@@ -31,7 +36,7 @@ ReactiveFormComponent = __decorate([
         selector: 'reactive-form',
         templateUrl: './app/reactive/reactive-form.component.html'
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [forms_1.FormBuilder])
 ], ReactiveFormComponent);
 exports.ReactiveFormComponent = ReactiveFormComponent;
 //# sourceMappingURL=reactive-form.component.js.map
