@@ -37,7 +37,13 @@ export class ReactiveFormComponent implements OnInit {
     // });
     this.form = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.maxLength(6)]],
-      username: ['', Validators.minLength(3)]
+      username: ['', Validators.minLength(3)],
+      addresses: this.fb.array([
+        this.fb.group({
+          city: [''],
+          country: ['']
+        })
+      ])
     });
 
     this.form.valueChanges.subscribe(data => this.validateForm());
@@ -55,7 +61,7 @@ export class ReactiveFormComponent implements OnInit {
 
         if (input.invalid && input.dirty) {
           // figure out the type of error
-          // loop over the formErrros field names
+          // loop over the formErrros field names  
           for (let error in input.errors){
             // assign that type of error message to a variable
             this.formErrors[field] = this.validationMessages[field][error];

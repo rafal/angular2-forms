@@ -41,7 +41,13 @@ var ReactiveFormComponent = (function () {
         // });
         this.form = this.fb.group({
             name: ['', [forms_1.Validators.minLength(3), forms_1.Validators.maxLength(6)]],
-            username: ['', forms_1.Validators.minLength(3)]
+            username: ['', forms_1.Validators.minLength(3)],
+            addresses: this.fb.array([
+                this.fb.group({
+                    city: [''],
+                    country: ['']
+                })
+            ])
         });
         this.form.valueChanges.subscribe(function (data) { return _this.validateForm(); });
     };
@@ -54,7 +60,7 @@ var ReactiveFormComponent = (function () {
             var input = this.form.get(field);
             if (input.invalid && input.dirty) {
                 // figure out the type of error
-                // loop over the formErrros field names
+                // loop over the formErrros field names  
                 for (var error in input.errors) {
                     // assign that type of error message to a variable
                     this.formErrors[field] = this.validationMessages[field][error];
