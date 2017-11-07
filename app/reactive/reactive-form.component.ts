@@ -14,6 +14,10 @@ export class ReactiveFormComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
+    this.buildForm();
+  }
+
+  buildForm(){
     // this.form = new FormGroup({
     //   name: new FormControl(''),
     //   username: new FormControl('')
@@ -23,9 +27,11 @@ export class ReactiveFormComponent implements OnInit {
       username: ['', Validators.minLength(3)]
     });
 
-    this.form.valueChanges.subscribe(data =>{
-      console.log(data);
+    this.form.valueChanges.subscribe(data => this.validateForm());
+    
+  }
 
+  validateForm(){
       this.nameError = '';
       this.usernameError = '';
 
@@ -53,7 +59,6 @@ export class ReactiveFormComponent implements OnInit {
         }
       }  
 
-    });
   }
 
   processForm(){
