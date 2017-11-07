@@ -15,6 +15,7 @@ var User = (function () {
 exports.User = User;
 var TemplateFormComponent = (function () {
     function TemplateFormComponent() {
+        this.submitted = false;
     }
     TemplateFormComponent.prototype.ngOnInit = function () {
         this.user = {
@@ -29,6 +30,10 @@ var TemplateFormComponent = (function () {
         enumerable: true,
         configurable: true
     });
+    TemplateFormComponent.prototype.processForm = function () {
+        console.log(this.user);
+        this.submitted = true;
+    };
     return TemplateFormComponent;
 }());
 TemplateFormComponent = __decorate([

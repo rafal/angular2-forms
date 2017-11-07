@@ -12,6 +12,7 @@ export class User{
 })
 export class TemplateFormComponent implements OnInit {
   user: User;
+  submitted: boolean = false;
 
   ngOnInit(){
     this.user = {
@@ -22,5 +23,10 @@ export class TemplateFormComponent implements OnInit {
 
   get diagnostic() {
     return JSON.stringify(this.user);
+  }
+
+  processForm() {
+    console.log(this.user);
+    this.submitted = true;
   }
 }
