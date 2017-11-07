@@ -7,8 +7,21 @@ import { FormGroup, FormBuilder,  Validators } from '@angular/forms';
 })
 export class ReactiveFormComponent implements OnInit {
   form: FormGroup;
-  nameError: string;
-  usernameError: string;
+  formErrors = {
+    name: '',
+    username: ''
+  };
+  validationMessages = {
+    name: {
+      required: 'Name is required',
+      minlength: 'Name must 3 at least 3 chars',
+      maxlength: 'Name must be max 6 chars'
+    },
+    username: {
+      required: 'Username is required',
+      minlength: 'Username must be at least 3 chars'
+    }
+  };
 
 
   constructor(private fb: FormBuilder) {}
@@ -28,36 +41,27 @@ export class ReactiveFormComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe(data => this.validateForm());
-    
+
   }
 
   validateForm(){
-      this.nameError = '';
-      this.usernameError = '';
+      // loop over formErrors field names
+      for (let field in this.formErrors){
+        // clear input field errors
+        this.formErrors[field] = '';
 
-      let name = this.form.get('name');
-      let username = this.form.get('username');
+        //grab input field by name
+        let input = this.form.get(field);
 
-      if (name.invalid && name.dirty) {
-        if (name.errors['required']) {
-          this.nameError = 'Name is required';
-        }
-        if (name.errors['minlength']) {
-          this.nameError = 'Name must be at least 3 characters.';
-        }
-        if (name.errors['maxlength']) {
-          this.nameError = 'Name must be max 6 characters.';
+        if (input.invalid && input.dirty) {
+          // figure out the type of error
+          // loop over the formErrros field names
+          for (let error in input.errors){
+            // assign that type of error message to a variable
+            this.formErrors[field] = this.validationMessages[field][error];
+          }
         }
       }
-
-      if (username.invalid && username.dirty){
-        if (username.errors['required']) {
-          this.usernameError = 'Username is required';
-        }
-        if (username.errors['minlength']) {
-          this.usernameError = 'Username must be at least 3 characters.';
-        }
-      }  
 
   }
 

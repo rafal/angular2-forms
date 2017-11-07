@@ -6,7 +6,7 @@
       formControlName="name">
 
     <span class="help-block" *ngIf="nameError">
-      {{ nameError }}
+      {{ formErrors.name }}
     </span>
 
   </div>  
@@ -17,7 +17,7 @@
       formControlName="username">
 
     <span class="help-block" *ngIf="usernameError">
-      {{ usernameError }}
+      {{ formErrors.username }}
     </span>
 
   </div>
