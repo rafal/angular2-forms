@@ -22,18 +22,33 @@ var ReactiveFormComponent = (function () {
         //   username: new FormControl('')
         // });
         this.form = this.fb.group({
-            name: [''],
-            username: ['']
+            name: ['', [forms_1.Validators.minLength(3), forms_1.Validators.maxLength(6)]],
+            username: ['', forms_1.Validators.minLength(3)]
         });
         this.form.valueChanges.subscribe(function (data) {
             console.log(data);
+            _this.nameError = '';
+            _this.usernameError = '';
             var name = _this.form.get('name');
             var username = _this.form.get('username');
             if (name.invalid && name.dirty) {
-                _this.nameError = 'Name is required';
+                if (name.errors['required']) {
+                    _this.nameError = 'Name is required';
+                }
+                if (name.errors['minlength']) {
+                    _this.nameError = 'Name must be at least 3 characters.';
+                }
+                if (name.errors['maxlength']) {
+                    _this.nameError = 'Name must be max 6 characters.';
+                }
             }
             if (username.invalid && username.dirty) {
-                _this.usernameError = 'Username is required';
+                if (username.errors['required']) {
+                    _this.usernameError = 'Username is required';
+                }
+                if (username.errors['minlength']) {
+                    _this.usernameError = 'Username must be at least 3 characters.';
+                }
             }
         });
     };
