@@ -7,23 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var platform_browser_1 = require("@angular/platform-browser");
-var app_component_1 = require("./app.component");
-var template_form_component_1 = require("./template/template-form.component");
-var AppModule = (function () {
-    function AppModule() {
+var TemplateFormComponent = (function () {
+    function TemplateFormComponent() {
     }
-    return AppModule;
+    return TemplateFormComponent;
 }());
-AppModule = __decorate([
-    core_1.NgModule({
-        imports: [platform_browser_1.BrowserModule],
-        declarations: [
-            app_component_1.AppComponent,
-            template_form_component_1.TemplateFormComponent
-        ],
-        bootstrap: [app_component_1.AppComponent]
+TemplateFormComponent = __decorate([
+    core_1.Component({
+        selector: 'template-form',
+        styleUrls: ['./app/template/template-form.component.css'],
+        templateUrl: './app/template/template-form.component.html'
     })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+], TemplateFormComponent);
+exports.TemplateFormComponent = TemplateFormComponent;
+//# sourceMappingURL=template-form.component.js.map
