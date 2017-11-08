@@ -16,7 +16,10 @@ var ReactiveFormComponent = (function () {
         this.fb = fb;
         this.formErrors = {
             name: '',
-            username: ''
+            username: '',
+            addresses: [
+                { city: '', country: '' }
+            ]
         };
         this.validationMessages = {
             name: {
@@ -27,6 +30,15 @@ var ReactiveFormComponent = (function () {
             username: {
                 required: 'Username is required',
                 minlength: 'Username must be at least 3 chars'
+            },
+            addresses: {
+                city: {
+                    required: 'City is required',
+                    minLength: 'City mus be 3 chars'
+                },
+                country: {
+                    required: 'Country required'
+                }
             }
         };
     }
@@ -43,10 +55,7 @@ var ReactiveFormComponent = (function () {
             name: ['', [forms_1.Validators.minLength(3), forms_1.Validators.maxLength(6)]],
             username: ['', forms_1.Validators.minLength(3)],
             addresses: this.fb.array([
-                this.fb.group({
-                    city: [''],
-                    country: ['']
-                })
+                this.createAddress()
             ])
         });
         this.form.valueChanges.subscribe(function (data) { return _this.validateForm(); });
@@ -67,13 +76,43 @@ var ReactiveFormComponent = (function () {
                 }
             }
         }
+        this.validateAddresses();
+    };
+    ReactiveFormComponent.prototype.validateAddresses = function () {
+        // grab addresses formarray
+        var addresses = this.form.get('addresses');
+        //clear form errors
+        this.formErrors.addresses = [];
+        //loop through however many form groups are in the form array
+        var n = 1;
+        while (n <= addresses.length) {
+            // add clear errors back
+            this.formErrors.addresses.push({ city: '', country: '' });
+            // grab specific group (address)
+            var address = addresses.at(n - 1);
+            // validate that specifc group
+            for (var field in address.controls) {
+                //get the form control
+                var input = address.get(field);
+                // do the validation and save errors to formerrors if necessary
+                if (input.invalid && input.dirty) {
+                    for (var error in input.errors) {
+                        this.formErrors.addresses[n - 1][field] = this.validationMessages.addresses[field][error];
+                    }
+                }
+            }
+            n++;
+        }
+    };
+    ReactiveFormComponent.prototype.createAddress = function () {
+        return this.fb.group({
+            city: ['', forms_1.Validators.minLength(3)],
+            country: ['']
+        });
     };
     ReactiveFormComponent.prototype.addAddress = function () {
         var addresses = this.form.get('addresses');
-        addresses.push(this.fb.group({
-            city: [''],
-            country: ['']
-        }));
+        addresses.push(this.createAddress());
     };
     ReactiveFormComponent.prototype.removeAddress = function (i) {
         var addresses = this.form.get('addresses');
